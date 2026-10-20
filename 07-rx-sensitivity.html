@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>07 RX minimum input sensitivity — Wi-Fi RF Test Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-lang="zh">
+<div class="wrap">
+<p class="crumb"><a href="index.html">&larr; Wi-Fi RF Test Guide</a></p>
+<h1>07 接收机最小输入灵敏度<span class="en-title">07 Receiver minimum input sensitivity</span></h1>
+<p class="lede zh">在规定误包率下能正常解调的最弱信号电平——数值越低（越负）代表“耳朵越灵”、覆盖越好。</p>
+<p class="lede en">The weakest input level the receiver can demodulate at a required PER — the lower (more negative), the better.</p>
+<div class="lang">
+<button class="on" onclick="setLang('zh')">中文</button>
+<button onclick="setLang('en')">English</button>
+</div>
+<section><h2>测试目的<span class="en"> / Purpose</span></h2>
+<ul><span class="zh"><li>直接决定弱信号下的覆盖能力与掉线表现。</li><li>这是 WFA 认证的 RX 核心项，产线常抽测。</li></span><span class="en"><li>Determines coverage and disconnect behavior at weak signal.</li><li>Core RX item for WFA certification; often sampled on the production line.</li></span></ul>
+</section>
+<section><h2>测试方向（重要）<span class="en"> / Direction (important)</span></h2>
+<p><span class="zh">与 TX 项方向相反：<b>仪器当发射端，DUT 当接收端</b>。仪器发已知信号，DUT 报收包统计。</span><span class="en">Opposite direction from TX tests: <b>the instrument transmits, the DUT receives</b> and reports its receive statistics.</span></p>
+</section>
+<section><h2>测试步骤<span class="en"> / Procedure</span></h2>
+<ol><span class="zh"><li>建立回环：DUT 收到包后通过测试模式回传收包计数给仪器。</li><li>信号源发<b>标准参考包</b>：固定速率（参考速率：如 11b 1 Mbps、11n MCS0）、固定包长（OFDM 4096 字节 / DSSS 1024 字节）、共 1000 包。</li><li>从较强电平开始，逐步衰减（步进 1 dB）降低 DUT 输入电平。</li><li>每个电平统计误包率（PER），找到 PER 恰好达到 10% 的电平点。</li><li>补偿：该电平 − 线损 = DUT 天线口实际输入电平 = 实测灵敏度。</li></span><span class="en"><li>Establish the loop: the DUT reports its received-packet count back via test mode.</li><li>Send the <b>standard reference packet</b>: fixed rate (e.g. 11b 1 Mbps, 11n MCS0), fixed length (4096-byte OFDM / 1024-byte DSSS), 1000 packets.</li><li>Step attenuation (1 dB) to lower the DUT's input level from a strong start.</li><li>Count PER at each level; find the level where PER first reaches 10%.</li><li>Compensate: that level − cable loss = the actual level at the DUT antenna port = measured sensitivity.</li></span></ol>
+</section>
+<section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
+<ul><span class="zh"><li>实测灵敏度 ≤ 标准限值（更好或相等）。例如：11n 20MHz MCS0 限值 −82 dBm；11ac MCS9 80MHz 限值 −72 dBm。</li><li>灵敏度裕量测试：在“限值 +3 dB”的电平下 PER 仍 ≤ 10%。</li></span><span class="en"><li>Measured sensitivity ≤ the standard limit (equal or better). E.g. 11n 20 MHz MCS0 limit −82 dBm; 11ac MCS9 80 MHz limit −72 dBm.</li><li>Sensitivity margin test: at limit + 3 dB, PER must still be ≤ 10%.</li></span></ul>
+</section>
+<section><h2>常见坑<span class="en"> / Pitfalls</span></h2>
+<ul><span class="zh"><li>屏蔽箱不干净、线缆屏蔽不良 → 环境信号污染结果，灵敏度虚差。测之前先测噪底。</li><li>DUT 没关省电/没锁速率 → PER 被重传和速率切换污染。</li></span><span class="en"><li>Leaky shield box or cables → ambient signals pollute the result; measure the noise floor first.</li><li>DUT not in fixed-rate / power-save disabled → PER polluted by retries and rate switching.</li></span></ul>
+</section>
+</div>
+<script>
+function setLang(l){document.body.dataset.lang=l;
+document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
+</script>
+</body>
+</html>

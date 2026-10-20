@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04 Frequency error — Wi-Fi RF Test Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-lang="zh">
+<div class="wrap">
+<p class="crumb"><a href="index.html">&larr; Wi-Fi RF Test Guide</a></p>
+<h1>04 发射频率误差 Frequency error<span class="en-title">04 Transmit frequency error</span></h1>
+<p class="lede zh">测载波实际频率与标称频率的偏差（ppm），主要反映晶振精度与 AFC 校准质量。</p>
+<p class="lede en">Carrier offset from the nominal frequency in ppm; reflects crystal accuracy and AFC calibration.</p>
+<div class="lang">
+<button class="on" onclick="setLang('zh')">中文</button>
+<button onclick="setLang('en')">English</button>
+</div>
+<section><h2>测试目的<span class="en"> / Purpose</span></h2>
+<ul><span class="zh"><li>频偏过大时接收端可能无法锁定/解调，尤其在高阶调制和长帧下。</li><li>频偏主要来源是晶振（±20 ppm 级别），靠产线 AFC 校准补偿。</li></span><span class="en"><li>Large offset prevents the receiver from locking/demodulating, especially at high MCS and long frames.</li><li>Mainly from the crystal (±20 ppm class); compensated by production AFC calibration.</li></span></ul>
+</section>
+<section><h2>测试步骤<span class="en"> / Procedure</span></h2>
+<ol><span class="zh"><li>DUT 发正常调制包（不用连续波——解调法估的是残余频偏）。</li><li>仪器解调后估计载波频偏，报 ppm = (频偏 / 载波频率) × 10⁶。</li><li>多信道都测：锁相环在不同频点表现可能不同。</li><li>温度敏感：严谨场景在高低温下复测。</li></span><span class="en"><li>DUT sends normal modulated packets (demodulation estimates residual offset).</li><li>Report ppm = (offset / carrier frequency) × 10⁶.</li><li>Test several channels — PLL behavior varies by frequency.</li><li>Temperature-sensitive: re-test at temperature extremes for rigorous runs.</li></span></ol>
+</section>
+<section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
+<ul><span class="zh"><li>≤ ±20 ppm（802.11 标准值）。</li><li>产线常用 ±10 ppm 作为校准通过判据。</li></span><span class="en"><li>≤ ±20 ppm per IEEE 802.11.</li><li>Production lines often gate at ±10 ppm.</li></span></ul>
+</section>
+<section><h2>超标处理<span class="en"> / If it fails</span></h2>
+<ul><span class="zh"><li>产线做 AFC（自动频率校准）写入校准数据后复测。</li><li>若 AFC 后仍超标，查晶振规格或晶体负载电容匹配。</li></span><span class="en"><li>Run AFC on the line, write calibration data, re-test.</li><li>If still failing, check the crystal spec and load-capacitor matching.</li></span></ul>
+</section>
+</div>
+<script>
+function setLang(l){document.body.dataset.lang=l;
+document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
+</script>
+</body>
+</html>

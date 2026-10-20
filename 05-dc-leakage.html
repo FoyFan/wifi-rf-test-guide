@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05 Center frequency leakage — Wi-Fi RF Test Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-lang="zh">
+<div class="wrap">
+<p class="crumb"><a href="index.html">&larr; Wi-Fi RF Test Guide</a></p>
+<h1>05 中心频率泄漏 DC leakage<span class="en-title">05 Transmit center frequency leakage</span></h1>
+<p class="lede zh">测 OFDM 直流子载波上的本振泄漏能量——相当于一个“跑不掉的干扰杂音”。</p>
+<p class="lede en">LO leakage on the OFDM DC subcarrier — an interfering tone that cannot be filtered out.</p>
+<div class="lang">
+<button class="on" onclick="setLang('zh')">中文</button>
+<button onclick="setLang('en')">English</button>
+</div>
+<section><h2>测试目的<span class="en"> / Purpose</span></h2>
+<ul><span class="zh"><li>OFDM 跳过 DC 子载波传数据，中心残留能量全部是本振（LO）泄漏。</li><li>泄漏会压低邻近子载波的解调性能，也抬高 EVM。</li></span><span class="en"><li>OFDM leaves the DC subcarrier unused, so any energy there is LO leakage.</li><li>It degrades neighboring subcarriers' demodulation and inflates EVM.</li></span></ul>
+</section>
+<section><h2>测试步骤<span class="en"> / Procedure</span></h2>
+<ol><span class="zh"><li>DUT 发 OFDM 调制包。</li><li>仪器解调后专门看<b>直流子载波（DC carrier）</b>上的功率。</li><li>报值：DC 子载波功率相对平均子载波功率的比值（dB）。</li></span><span class="en"><li>DUT sends OFDM packets.</li><li>Demodulate and inspect the <b>DC subcarrier</b> power specifically.</li><li>Report the DC power relative to the average subcarrier power (dB).</li></span></ol>
+</section>
+<section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
+<ul><span class="zh"><li>≤ −15 dB（802.11 典型要求，不同标准版本略有差异）。</li></span><span class="en"><li>≤ −15 dB (typical 802.11 requirement; varies slightly by standard revision).</li></span></ul>
+</section>
+<section><h2>超标分析<span class="en"> / If it fails</span></h2>
+<ul><span class="zh"><li>IQ 调制器本振馈通过大 → 硬件问题，查调制器设计。</li><li>DC offset 校准没做好 → 重跑产线 DC 校准。</li></span><span class="en"><li>Excessive LO feed-through → hardware issue in the IQ modulator.</li><li>Poor DC-offset calibration → re-run the production DC calibration.</li></span></ul>
+</section>
+</div>
+<script>
+function setLang(l){document.body.dataset.lang=l;
+document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
+</script>
+</body>
+</html>

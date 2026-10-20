@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03 EVM (modulation accuracy) — Wi-Fi RF Test Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-lang="zh">
+<div class="wrap">
+<p class="crumb"><a href="index.html">&larr; Wi-Fi RF Test Guide</a></p>
+<h1>03 调制精度 EVM<span class="en-title">03 Transmit modulation accuracy (EVM)</span></h1>
+<p class="lede zh">衡量调制波形“准不准”——实际星座点与理想星座点的偏差，直接决定最高可用调制速率。</p>
+<p class="lede en">How accurate the modulated waveform is — the deviation of actual constellation points from ideal. It caps the top usable MCS.</p>
+<div class="lang">
+<button class="on" onclick="setLang('zh')">中文</button>
+<button onclick="setLang('en')">English</button>
+</div>
+<section><h2>测试目的<span class="en"> / Purpose</span></h2>
+<ul><span class="zh"><li>EVM 太大时对端解调不出数据，直接限制最高速率（256QAM/1024QAM 对 EVM 要求更苛刻）。</li><li>这是最能暴露射频链路问题（相位噪声、IQ 不平衡、PA 压缩）的测试。</li></span><span class="en"><li>High EVM breaks demodulation and caps the top rate; 256QAM/1024QAM demand tight EVM.</li><li>The most revealing test for phase noise, IQ imbalance and PA compression.</li></span></ul>
+</section>
+<section><h2>测试步骤<span class="en"> / Procedure</span></h2>
+<ol><span class="zh"><li>DUT 发<b>最高阶调制</b>的满速率包（11ax MCS11 = 1024QAM；11ac 的 256QAM）——EVM 只在最高阶调制下才暴露问题。</li><li>综合仪/VSA 解调，对每个 OFDM 符号的每个子载波计算：EVM(dB) = 20·log₁₀(误差矢量幅值 / 理想幅值)。</li><li>测 100~1000 个包取统计。</li><li>报告：平均 EVM、最差子载波 EVM、最差符号 EVM、EVM 随时间/子载波分布图。</li></span><span class="en"><li>DUT transmits full-rate packets at the <b>highest-order modulation</b> (11ax MCS11 = 1024QAM; 256QAM for 11ac) — EVM problems only show there.</li><li>Demodulate with the VSA; per subcarrier and symbol compute EVM(dB) = 20·log₁₀(|error| / |ideal|).</li><li>Collect 100–1000 bursts for statistics.</li><li>Report mean EVM, worst subcarrier, worst symbol, and EVM vs time/subcarrier plots.</li></span></ol>
+</section>
+<section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
+<table><tr><th>调制 Modulation</th><th>EVM 限值 Limit</th></tr><tr><td>QPSK</td><td>≤ −10 dB (35%)</td></tr><tr><td>16QAM</td><td>≤ −16 dB (16%)</td></tr><tr><td>64QAM</td><td>≤ −25 dB (5.6%)</td></tr><tr><td>256QAM</td><td>≤ −30 dB (3.2%)</td></tr><tr><td>1024QAM (11ax MCS10/11)</td><td>≤ −35 dB (1.8%)</td></tr></table>
+</section>
+<section><h2>结果分析<span class="en"> / Analysis</span></h2>
+<ul><span class="zh"><li>只有边缘子载波 EVM 差 → 频偏/相位噪声问题。</li><li>符号首尾 EVM 差 → IQ 不平衡或时域漂移。</li><li>整体 EVM 差 → PA 压缩或功率过高，先降功率再看。</li></span><span class="en"><li>Only edge subcarriers bad → frequency offset / phase noise.</li><li>First/last symbols bad → IQ imbalance or timing drift.</li><li>Uniformly bad → PA compression or over-power; lower power and retry.</li></span></ul>
+</section>
+<section><h2>常见坑<span class="en"> / Pitfalls</span></h2>
+<ul><span class="zh"><li>只看平均 EVM → 边缘子载波/偶发符号劣化测不出来，实际用网会掉速率。</li><li>用低阶调制测 EVM → 永远 pass，但毫无信息量。</li></span><span class="en"><li>Mean-only EVM hides edge-subcarrier or sporadic degradation; real networks will drop rate.</li><li>Testing EVM at low-order modulation always passes and tells you nothing.</li></span></ul>
+</section>
+</div>
+<script>
+function setLang(l){document.body.dataset.lang=l;
+document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wi-Fi RF 8 Test Guide</title>
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--muted:#94a3b8;--accent:#38bdf8;--border:#334155;--tag:#0ea5e9}
+@media (prefers-color-scheme: light){:root:not([data-theme=dark]){--bg:#f8fafc;--card:#ffffff;--text:#0f172a;--muted:#64748b;--accent:#0284c7;--border:#e2e8f0;--tag:#0284c7}}
+:root[data-theme=dark]{--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--muted:#94a3b8;--accent:#38bdf8;--border:#334155;--tag:#0ea5e9}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;line-height:1.7;min-height:100vh}
+.wrap{max-width:960px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+h1{font-size:1.9rem;margin-bottom:.5rem}
+.sub{color:var(--muted);margin-bottom:2rem;font-size:1.05rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;text-decoration:none;color:var(--text);transition:transform .15s,border-color .15s;display:block}
+.card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.num{display:inline-block;background:var(--tag);color:#fff;font-size:.75rem;font-weight:700;border-radius:6px;padding:.15rem .55rem;margin-bottom:.6rem}
+.card h2{font-size:1.05rem;margin-bottom:.35rem}
+.card p{color:var(--muted);font-size:.88rem}
+.note{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-top:2.25rem}
+.note h3{font-size:1rem;margin-bottom:.6rem}
+.note ul{margin-left:1.25rem;color:var(--muted);font-size:.92rem}
+.note li{margin:.3rem 0}
+.lang{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.lang button{background:var(--card);border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:.35rem 1rem;cursor:pointer;font-size:.85rem}
+.lang button.on{border-color:var(--accent);color:var(--accent)}
+[data-lang="en"] .zh{display:none}
+[data-lang="zh"] .en{display:none}
+</style>
+</head>
+<body data-lang="zh">
+<div class="wrap">
+<h1><span class="zh">Wi-Fi 射频八项测试指南</span><span class="en">Wi-Fi RF Eight-Test Guide</span></h1>
+<p class="sub"><span class="zh">八项核心收发测试的详细步骤、判定标准与常见坑（中英双语）</span><span class="en">Detailed steps, pass criteria and pitfalls for the 8 core TX/RX tests (bilingual)</span></p>
+<div class="lang">
+<button class="on" onclick="setLang('zh')">中文</button>
+<button onclick="setLang('en')">English</button>
+</div>
+<div class="grid">
+<a class="card" href="01-tx-power.html"><span class="num">01 · TX</span><h2><span class="zh">Transmit power 发射功率</span><span class="en">Transmit power</span></h2><p><span class="zh">测量发射信号强度（dBm）：校线损、逐信道/速率扫描、判定与补偿。</span><span class="en">Measure TX level (dBm): cable-loss calibration, per-channel/rate sweep, pass criteria.</span></p></a>
+<a class="card" href="02-tx-spectrum-mask.html"><span class="num">02 · TX</span><h2><span class="zh">Spectrum mask 发射频谱模板</span><span class="en">Transmit spectrum mask</span></h2><p><span class="zh">验证带内外能量分布符合标准模板，防止带外泄漏干扰邻道。</span><span class="en">Verify out-of-channel energy fits the standard mask; prevent adjacent-channel interference.</span></p></a>
+<a class="card" href="03-evm.html"><span class="num">03 · TX</span><h2><span class="zh">Modulation accuracy 调制精度 (EVM)</span><span class="en">Modulation accuracy (EVM)</span></h2><p><span class="zh">解调信号算星座点误差，决定最高可用速率，最能暴露射频问题。</span><span class="en">Demodulate and compute constellation error; sets the top usable MCS; most revealing test.</span></p></a>
+<a class="card" href="04-freq-error.html"><span class="num">04 · TX</span><h2><span class="zh">Frequency error 发射频率误差</span><span class="en">Transmit frequency error</span></h2><p><span class="zh">测载波频偏（ppm），反映晶振质量与 AFC 校准。</span><span class="en">Carrier offset in ppm; reflects crystal quality and AFC calibration.</span></p></a>
+<a class="card" href="05-dc-leakage.html"><span class="num">05 · TX</span><h2><span class="zh">Center frequency leakage 中心频率泄漏</span><span class="en">Center frequency leakage</span></h2><p><span class="zh">测 OFDM 直流子载波上的本振泄漏，反映 IQ 调制器与 DC offset 校准。</span><span class="en">LO leakage on the OFDM DC subcarrier; reflects IQ modulator and DC-offset calibration.</span></p></a>
+<a class="card" href="06-spectral-flatness.html"><span class="num">06 · TX</span><h2><span class="zh">Spectral flatness 频谱平坦度</span><span class="en">Transmit spectral flatness</span></h2><p><span class="zh">测带内子载波功率起伏，发现滤波器滚降、频偏、信道估计问题。</span><span class="en">In-band subcarrier ripple; reveals filter roll-off, frequency offset, channel-estimation issues.</span></p></a>
+<a class="card" href="07-rx-sensitivity.html"><span class="num">07 · RX</span><h2><span class="zh">RX min sensitivity 最小输入灵敏度</span><span class="en">RX minimum input sensitivity</span></h2><p><span class="zh">反向灌包找 PER=10% 的最弱电平，衡量接收机"耳朵最灵"。</span><span class="en">Sweep downlink power to find the weakest level at PER=10%.</span></p></a>
+<a class="card" href="08-rx-max-input.html"><span class="num">08 · RX</span><h2><span class="zh">RX max input level 最大输入电平</span><span class="en">RX maximum input level</span></h2><p><span class="zh">反向灌强信号验证接收机不饱和，保证近距离仍能通信。</span><span class="en">Flood the receiver with a strong signal to verify it does not saturate.</span></p></a>
+</div>
+<div class="note">
+<h3><span class="zh">通用前提</span><span class="en">Common prerequisites</span></h3>
+<ul>
+<li class="zh"><b>线损校准</b>：所有传导测试前，用网分/功率计测出各频点线缆损耗并输入测试软件补偿，否则全部数据失真。</li>
+<li class="en"><b>Cable-loss calibration</b>: before any conducted test, measure cable loss per frequency (VNA/power meter) and compensate in the test software; otherwise all numbers are wrong.</li>
+<li class="zh"><b>测试模式</b>：用芯片厂工具（wlu / art2 / MP tool 等）使 DUT 脱离协议栈，进入连续发射/接收模式。</li>
+<li class="en"><b>Test mode</b>: use the chip vendor tool (wlu / art2 / MP tool…) to take the DUT out of the protocol stack into continuous TX/RX modes.</li>
+<li class="zh"><b>屏蔽箱</b>：隔绝环境 Wi-Fi 干扰，对灵敏度测试尤其关键。</li>
+<li class="en"><b>Shield box</b>: isolate ambient Wi-Fi; critical for sensitivity tests.</li>
+<li class="zh"><b>仪器</b>：Wi-Fi 综合测试仪（IQxel、CMW270 等）或频谱仪 + 信号源组合。</li>
+<li class="en"><b>Instruments</b>: a Wi-Fi combo tester (IQxel, CMW270…) or a spectrum analyzer plus vector signal generator.</li>
+<li class="zh">限值以 IEEE 802.11 标准与典型产品规格为例，实际以对应标准版本和客户规格书为准。</li>
+<li class="en">Limits shown follow IEEE 802.11 and typical product specs; defer to the exact standard revision and your customer spec.</li>
+</ul>
+</div>
+</div>
+<script>
+function setLang(l){document.body.dataset.lang=l;
+document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
+</script>
+</body>
+</html>

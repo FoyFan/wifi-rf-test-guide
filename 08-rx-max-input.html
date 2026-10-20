@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08 RX maximum input level — Wi-Fi RF Test Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-lang="zh">
+<div class="wrap">
+<p class="crumb"><a href="index.html">&larr; Wi-Fi RF Test Guide</a></p>
+<h1>08 接收机最大输入电平<span class="en-title">08 Receiver maximum input level</span></h1>
+<p class="lede zh">在规定误包率下仍能正常接收的最强信号电平——保证近距离强信号下接收机不饱和、不掉线。</p>
+<p class="lede en">The strongest input level still received at the required PER — ensures the front end does not saturate at close range.</p>
+<div class="lang">
+<button class="on" onclick="setLang('zh')">中文</button>
+<button onclick="setLang('en')">English</button>
+</div>
+<section><h2>测试目的<span class="en"> / Purpose</span></h2>
+<ul><span class="zh"><li>信号太强会导致接收机前端（LNA/混频器）饱和、大信号压缩，解调失败——表现为“手机贴着 AP 反而掉线”。</li><li>主要在 DV 阶段验证；产线一般不测（需要反向灌大信号，工装不方便）。</li></span><span class="en"><li>Too-strong signals saturate the LNA/mixer and break demodulation — the classic “phone next to the AP disconnects” case.</li><li>Verified at DV stage; production lines usually skip it (reverse high-level injection is awkward).</li></span></ul>
+</section>
+<section><h2>测试步骤<span class="en"> / Procedure</span></h2>
+<ol><span class="zh"><li>信号源发<b>强信号</b>直接灌入 DUT——不需要衰减器，必要时近距离耦合或加放大。</li><li>典型从 0 dBm 开始，发 1000 包统计 PER。</li><li>在标准规定的最大电平区间内（如 −30 dBm 到 0 dBm，具体看代际）逐点验证。</li></span><span class="en"><li>Inject a <b>strong</b> signal directly into the DUT — no attenuator; close coupling or extra gain if needed.</li><li>Start at 0 dBm, send 1000 packets, count PER.</li><li>Verify every level in the standard's high-level range (e.g. −30 to 0 dBm, generation-dependent).</li></span></ol>
+</section>
+<section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
+<ul><span class="zh"><li>在规定最大电平（802.11 通常要求到 0 dBm）下 PER ≤ 10%。</li></span><span class="en"><li>At the specified maximum level (802.11 typically requires up to 0 dBm), PER ≤ 10%.</li></span></ul>
+</section>
+<section><h2>超标表现<span class="en"> / If it fails</span></h2>
+<ul><span class="zh"><li>接收机前端饱和/压缩 → 解调失败。改不了软件，通常是前端设计余量不足，需硬件评估。</li></span><span class="en"><li>Front-end saturation/compression breaks demodulation. Not fixable in software — usually a front-end design margin issue needing hardware review.</li></span></ul>
+</section>
+</div>
+<script>
+function setLang(l){document.body.dataset.lang=l;
+document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
+</script>
+</body>
+</html>

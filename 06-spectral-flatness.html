@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06 Spectral flatness — Wi-Fi RF Test Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-lang="zh">
+<div class="wrap">
+<p class="crumb"><a href="index.html">&larr; Wi-Fi RF Test Guide</a></p>
+<h1>06 频谱平坦度 Spectral flatness<span class="en-title">06 Transmit spectral flatness</span></h1>
+<p class="lede zh">整个信道带宽内各子载波功率应基本一致——频谱“高低不平”会让部分子载波传的数据出错。</p>
+<p class="lede en">Subcarrier power across the channel should be flat; ripple corrupts data on the weak subcarriers.</p>
+<div class="lang">
+<button class="on" onclick="setLang('zh')">中文</button>
+<button onclick="setLang('en')">English</button>
+</div>
+<section><h2>测试目的<span class="en"> / Purpose</span></h2>
+<ul><span class="zh"><li>发现滤波器滚降、频偏、信道估计等问题。</li><li>平坦度差 → 部分子载波 SNR 低 → 高阶调制时这些子载波必然出错。</li></span><span class="en"><li>Reveals filter roll-off, frequency offset and channel-estimation issues.</li><li>Poor flatness → low SNR subcarriers → guaranteed errors at high MCS.</li></span></ul>
+</section>
+<section><h2>测试步骤<span class="en"> / Procedure</span></h2>
+<ol><span class="zh"><li>DUT 发满带宽调制包（80 MHz 带宽发满 234 个数据子载波）。</li><li>仪器解调，测每个子载波功率，画带内功率曲线。</li><li>与平均功率比，检查各子载波起伏是否在标准窗内。</li></span><span class="en"><li>DUT transmits full-bandwidth packets (234 data subcarriers at 80 MHz).</li><li>Demodulate and plot per-subcarrier power.</li><li>Check ripple against the standard's window, relative to the mean.</li></span></ol>
+</section>
+<section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
+<ul><span class="zh"><li>802.11 规定：中心 ±16 个子载波内起伏 ≤ +1/−2 dB；边缘子载波 ≤ +2/−4 dB。</li><li>全部子载波都必须落在窗内。</li></span><span class="en"><li>IEEE 802.11: within the center ±16 subcarriers, ripple ≤ +1/−2 dB; edge subcarriers ≤ +2/−4 dB.</li><li>Every subcarrier must fall inside the window.</li></span></ul>
+</section>
+<section><h2>超标分析<span class="en"> / If it fails</span></h2>
+<ul><span class="zh"><li>曲线整体倾斜 → 频偏过大或滤波器滚降。</li><li>中间凹陷 → 时钟同步/信道估计问题。</li><li>局部尖峰 → 滤波器/匹配网络谐振。</li></span><span class="en"><li>Overall tilt → excessive frequency offset or filter roll-off.</li><li>Mid-band dip → clock sync / channel-estimation issue.</li><li>Local spikes → filter or matching-network resonance.</li></span></ul>
+</section>
+</div>
+<script>
+function setLang(l){document.body.dataset.lang=l;
+document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
+</script>
+</body>
+</html>

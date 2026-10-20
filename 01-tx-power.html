@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 Transmit power — Wi-Fi RF Test Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-lang="zh">
+<div class="wrap">
+<p class="crumb"><a href="index.html">&larr; Wi-Fi RF Test Guide</a></p>
+<h1>01 发射功率 Transmit power<span class="en-title">01 Transmit power</span></h1>
+<p class="lede zh">测量设备发射信号的最大强度（dBm）。功率过高会违规/干扰他人，过低则覆盖不足。</p>
+<p class="lede en">Measure the DUT's transmit level in dBm. Too high violates regulations; too low kills coverage.</p>
+<div class="lang">
+<button class="on" onclick="setLang('zh')">中文</button>
+<button onclick="setLang('en')">English</button>
+</div>
+<section><h2>测试目的<span class="en"> / Purpose</span></h2>
+<ul><span class="zh"><li>验证各信道/速率/天线口的发射功率在规格范围内，且各信道间差异（功率平坦度）达标。</li><li>这是法规认证（FCC/CE/SRRC）的强制项，也是产线校准的核心项。</li></span><span class="en"><li>Verify TX power per channel/rate/antenna is within spec, and inter-channel flatness is acceptable.</li><li>Mandatory for regulatory certification (FCC/CE/SRRC) and a core production-line item.</li></span></ul>
+</section>
+<section><h2>环境搭建<span class="en"> / Setup</span></h2>
+<ol><span class="zh"><li>DUT 放入屏蔽箱，RF 口通过线缆/耦合器接到综合测试仪（或频谱仪）。</li><li><b>校线损</b>：用网分或功率计测出线缆在各频点（2.412/2.437/2.472 GHz、5.18/5.5/5.8 GHz…）的损耗，输入测试软件补偿。</li><li>用芯片厂工具（wlu / art2 / MP tool）让 DUT 进入测试模式，脱离协议栈。</li></span><span class="en"><li>Put the DUT in a shield box; connect its RF port to the combo tester (or spectrum analyzer) via cable/coupler.</li><li><b>Calibrate cable loss</b> at each working frequency and compensate in software.</li><li>Use the vendor tool (wlu / art2 / MP tool) to enter test mode.</li></span></ol>
+</section>
+<section><h2>测试步骤<span class="en"> / Procedure</span></h2>
+<ol><span class="zh"><li>DUT 设为连续发射（Continuous TX）或发满速率包流，固定信道/速率/带宽。</li><li>仪器测信道内<b>平均功率</b>（多个包取平均），检波用 RMS/Average。</li><li>遍历每个信道、每档速率、每根天线（如 2.4G 的 1/6/11 信道 × 11b/g/n 各速率）。</li><li>补偿：DUT 实际功率 = 仪器读数 + 线损。</li></span><span class="en"><li>Set continuous TX or a full-rate packet stream; fix channel/rate/bandwidth.</li><li>Measure in-channel <b>average power</b> (average over many bursts, RMS/average detector).</li><li>Sweep every channel, rate and antenna (e.g. 2.4G ch 1/6/11 × 11b/g/n rates).</li><li>Compensate: actual DUT power = instrument reading + cable loss.</li></span></ol>
+</section>
+<section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
+<ul><span class="zh"><li>功率在规格范围内：法规限值（如 FCC 2.4G ≤ +30 dBm EIRP）以内，产品规格通常定 18~23 dBm。</li><li>信道间功率差异通常 ≤ 1.5~2 dB，否则说明校准表有问题。</li></span><span class="en"><li>Power within spec: below the regulatory limit (e.g. FCC 2.4G ≤ +30 dBm EIRP); product specs typically 18–23 dBm.</li><li>Inter-channel delta typically ≤ 1.5–2 dB, otherwise the calibration table is suspect.</li></span></ul>
+</section>
+<section><h2>常见坑<span class="en"> / Pitfalls</span></h2>
+<ul><span class="zh"><li>不校线损 → 功率虚高/虚低，全表失真。</li><li>频谱仪用峰值检波 vs 综合仪用平均检波，读数会打架——统一按标准配置。</li></span><span class="en"><li>Skipping cable-loss calibration corrupts every number.</li><li>Peak vs average detector makes instruments disagree — follow the standard's configuration.</li></span></ul>
+</section>
+</div>
+<script>
+function setLang(l){document.body.dataset.lang=l;
+document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
+</script>
+</body>
+</html>

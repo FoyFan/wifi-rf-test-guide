@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 Transmit spectrum mask — Wi-Fi RF Test Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-lang="zh">
+<div class="wrap">
+<p class="crumb"><a href="index.html">&larr; Wi-Fi RF Test Guide</a></p>
+<h1>02 发射频谱模板 Spectrum mask<span class="en-title">02 Transmit spectrum mask</span></h1>
+<p class="lede zh">规定发射能量在信道内外的分布形状，要求带外/邻频泄漏必须低于标准模板线。</p>
+<p class="lede en">Constrains the shape of the transmitted spectrum; out-of-channel leakage must fall below the standard mask.</p>
+<div class="lang">
+<button class="on" onclick="setLang('zh')">中文</button>
+<button onclick="setLang('en')">English</button>
+</div>
+<section><h2>测试目的<span class="en"> / Purpose</span></h2>
+<ul><span class="zh"><li>防止能量泄漏到相邻信道造成干扰——这是 FCC/CE 法规强制项。</li><li>验证占用带宽（OBW）不超标。</li></span><span class="en"><li>Prevent adjacent-channel interference — mandatory under FCC/CE.</li><li>Also verifies occupied bandwidth (OBW).</li></span></ul>
+</section>
+<section><h2>测试步骤<span class="en"> / Procedure</span></h2>
+<ol><span class="zh"><li>DUT 发<b>真实 OFDM 调制信号</b>（不能用单载波 CW，否则结果完全无效）。</li><li>频谱仪调到信道中心，RBW=100 kHz（按标准），VBW ≥ 3×RBW，RMS 检波。</li><li>测信道中心 ±N MHz：20 MHz 信道测到 ±40 MHz；40 MHz 测到 ±60 MHz。</li><li>用 packet burst 触发，确保抓到完整数据包。</li><li>将实测包络与标准模板线叠加对比，并测 99% 占用带宽。</li></span><span class="en"><li>DUT transmits <b>real OFDM modulation</b> (never CW — results would be invalid).</li><li>Analyzer at channel center, RBW=100 kHz per the standard, VBW ≥ 3×RBW, RMS detector.</li><li>Sweep ±N MHz around the channel: ±40 MHz for a 20 MHz channel, ±60 MHz for 40 MHz.</li><li>Trigger on the packet burst to capture complete packets.</li><li>Overlay the measured envelope on the mask; also measure 99% OBW.</li></span></ol>
+</section>
+<section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
+<ul><span class="zh"><li>每一点带外衰减都不得高于模板线。802.11 典型值：中心 ±11 MHz 内 0 dBr；±20 MHz 处 ≤ −20 dBr；±30 MHz 处 ≤ −28 dBr（不同带宽/代际限值不同）。</li><li>99% 功率带宽不得超限。</li></span><span class="en"><li>No point may rise above the mask. Typical 802.11 values: 0 dBr within ±11 MHz; ≤ −20 dBr at ±20 MHz; ≤ −28 dBr at ±30 MHz (varies with bandwidth/generation).</li><li>99% OBW must not exceed the limit.</li></span></ul>
+</section>
+<section><h2>常见坑<span class="en"> / Pitfalls</span></h2>
+<ul><span class="zh"><li>用 CW 代替调制信号 → 结果完全错误。</li><li>RBW 设置不符标准 → 模板对比无意义。</li></span><span class="en"><li>Using CW instead of modulation invalidates the result.</li><li>Wrong RBW makes the mask comparison meaningless.</li></span></ul>
+</section>
+</div>
+<script>
+function setLang(l){document.body.dataset.lang=l;
+document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
+</script>
+</body>
+</html>
