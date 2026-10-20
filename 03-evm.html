@@ -23,7 +23,10 @@
 <ol><span class="zh"><li>DUT 发<b>最高阶调制</b>的满速率包（11ax MCS11 = 1024QAM；11ac 的 256QAM）——EVM 只在最高阶调制下才暴露问题。</li><li>综合仪/VSA 解调，对每个 OFDM 符号的每个子载波计算：EVM(dB) = 20·log₁₀(误差矢量幅值 / 理想幅值)。</li><li>测 100~1000 个包取统计。</li><li>报告：平均 EVM、最差子载波 EVM、最差符号 EVM、EVM 随时间/子载波分布图。</li></span><span class="en"><li>DUT transmits full-rate packets at the <b>highest-order modulation</b> (11ax MCS11 = 1024QAM; 256QAM for 11ac) — EVM problems only show there.</li><li>Demodulate with the VSA; per subcarrier and symbol compute EVM(dB) = 20·log₁₀(|error| / |ideal|).</li><li>Collect 100–1000 bursts for statistics.</li><li>Report mean EVM, worst subcarrier, worst symbol, and EVM vs time/subcarrier plots.</li></span></ol>
 </section>
 <section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
-<table><tr><th>调制 Modulation</th><th>EVM 限值 Limit</th></tr><tr><td>QPSK</td><td>≤ −10 dB (35%)</td></tr><tr><td>16QAM</td><td>≤ −16 dB (16%)</td></tr><tr><td>64QAM</td><td>≤ −25 dB (5.6%)</td></tr><tr><td>256QAM</td><td>≤ −30 dB (3.2%)</td></tr><tr><td>1024QAM (11ax MCS10/11)</td><td>≤ −35 dB (1.8%)</td></tr></table>
+<table><tr><th>调制 Modulation</th><th>EVM 限值 Limit</th></tr><tr><td>QPSK</td><td>≤ −10 dB (35%)</td></tr><tr><td>16QAM</td><td>≤ −16 dB (16%)</td></tr><tr><td>64QAM</td><td>≤ −25 dB (5.6%)</td></tr><tr><td>256QAM</td><td>≤ −30 dB (3.2%)</td></tr><tr><td>1024QAM (11ax MCS10/11)</td><td>≤ −35 dB (1.8%)</td></tr></table><section><h2>标准依据<span class="en"> / Standard basis</span></h2>
+<ul><span class="zh"><li>EVM 限值定义于 802.11-2016：OFDM Clause 17.3.9.6（Transmit modulation accuracy）；HT Clause 20.3.9.5（按 MCS 规定相对星座误差误差比）；VHT Clause 21.3.9.2；11ax（HE）在 802.11-2024 Clause 27 及 WFA 测试计划中扩展到 1024QAM。表中数值即标准相对星座误差（RCE）限值，换算为 dB。</li><li>注意标准按“每档调制”规定 EVM，测量条件（数据速率、包长、信道）在条款正文给出。</li></span><span class="en"><li>EVM limits are defined in 802.11-2016: OFDM Clause 17.3.9.6 (Transmit modulation accuracy); HT Clause 20.3.9.5 (relative constellation error per MCS); VHT Clause 21.3.9.2; 11ax (HE) extends to 1024QAM in Clause 27 of 802.11-2024 and the WFA test plans. The table values are the standard's relative constellation error (RCE) limits converted to dB.</li><li>The standard defines EVM per modulation class; measurement conditions (data rate, packet length, channel) are given in the clause text.</li></span></ul>
+</section>
+
 </section>
 <section><h2>结果分析<span class="en"> / Analysis</span></h2>
 <ul><span class="zh"><li>只有边缘子载波 EVM 差 → 频偏/相位噪声问题。</li><li>符号首尾 EVM 差 → IQ 不平衡或时域漂移。</li><li>整体 EVM 差 → PA 压缩或功率过高，先降功率再看。</li></span><span class="en"><li>Only edge subcarriers bad → frequency offset / phase noise.</li><li>First/last symbols bad → IQ imbalance or timing drift.</li><li>Uniformly bad → PA compression or over-power; lower power and retry.</li></span></ul>
@@ -32,6 +35,8 @@
 <ul><span class="zh"><li>只看平均 EVM → 边缘子载波/偶发符号劣化测不出来，实际用网会掉速率。</li><li>用低阶调制测 EVM → 永远 pass，但毫无信息量。</li></span><span class="en"><li>Mean-only EVM hides edge-subcarrier or sporadic degradation; real networks will drop rate.</li><li>Testing EVM at low-order modulation always passes and tells you nothing.</li></span></ul>
 </section>
 </div>
+<p class="lede zh" style="font-size:.85rem">标准依据：IEEE Std 802.11-2016（合并了 OFDM/HT/VHT 各 PHY 的条款编号， Clause 17/20/21）；802.11-2016 已被 802.11-2020 取代，2020 又被 802.11-2024 取代，条款编号一致。法规项另见 FCC Part 15.247/15.407 与 ETSI EN 300 328/301 893。</p>
+<p class="lede en" style="font-size:.85rem">Standard basis: IEEE Std 802.11-2016 (consolidated clause numbering for the OFDM/HT/VHT PHYs, Clauses 17/20/21); 802.11-2016 was superseded by 802.11-2020, itself superseded by 802.11-2024, with identical clause numbering. Regulatory items: FCC Part 15.247/15.407 and ETSI EN 300 328/301 893.</p>
 <script>
 function setLang(l){document.body.dataset.lang=l;
 document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}

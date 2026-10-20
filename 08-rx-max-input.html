@@ -28,7 +28,12 @@
 <section><h2>超标表现<span class="en"> / If it fails</span></h2>
 <ul><span class="zh"><li>接收机前端饱和/压缩 → 解调失败。改不了软件，通常是前端设计余量不足，需硬件评估。</li></span><span class="en"><li>Front-end saturation/compression breaks demodulation. Not fixable in software — usually a front-end design margin issue needing hardware review.</li></span></ul>
 </section>
+<section><h2>标准依据<span class="en"> / Standard basis</span></h2>
+<ul><span class="zh"><li>接收机最大输入电平定义于 802.11-2016 Clause 17.3.10.3（OFDM，Receiver maximum input level：在 −30 dBm 至 0 dBm 范围内 PER ≤ 10%）；HT Clause 20.3.10.3；VHT 沿用同类要求（Clause 21.3.6，Receiver maximum input level）。11ax 在 802.11-2024 Clause 27 中扩展。</li><li>标准要求接收机在 −30 dBm 到 0 dBm 全区间保持 PER ≤ 10%，上限通常为 0 dBm。</li></span><span class="en"><li>RX maximum input level: 802.11-2016 Clause 17.3.10.3 (OFDM, Receiver maximum input level: PER ≤ 10% from −30 dBm to 0 dBm); HT Clause 20.3.10.3; VHT keeps the equivalent requirement (Clause 21.3.6). 11ax extends it in Clause 27 of 802.11-2024.</li><li>The standard requires PER ≤ 10% across the whole −30 to 0 dBm range, with a ceiling of typically 0 dBm.</li></span></ul>
+</section>
 </div>
+<p class="lede zh" style="font-size:.85rem">标准依据：IEEE Std 802.11-2016（合并了 OFDM/HT/VHT 各 PHY 的条款编号， Clause 17/20/21）；802.11-2016 已被 802.11-2020 取代，2020 又被 802.11-2024 取代，条款编号一致。法规项另见 FCC Part 15.247/15.407 与 ETSI EN 300 328/301 893。</p>
+<p class="lede en" style="font-size:.85rem">Standard basis: IEEE Std 802.11-2016 (consolidated clause numbering for the OFDM/HT/VHT PHYs, Clauses 17/20/21); 802.11-2016 was superseded by 802.11-2020, itself superseded by 802.11-2024, with identical clause numbering. Regulatory items: FCC Part 15.247/15.407 and ETSI EN 300 328/301 893.</p>
 <script>
 function setLang(l){document.body.dataset.lang=l;
 document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}

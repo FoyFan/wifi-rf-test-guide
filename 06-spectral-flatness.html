@@ -28,7 +28,12 @@
 <section><h2>超标分析<span class="en"> / If it fails</span></h2>
 <ul><span class="zh"><li>曲线整体倾斜 → 频偏过大或滤波器滚降。</li><li>中间凹陷 → 时钟同步/信道估计问题。</li><li>局部尖峰 → 滤波器/匹配网络谐振。</li></span><span class="en"><li>Overall tilt → excessive frequency offset or filter roll-off.</li><li>Mid-band dip → clock sync / channel-estimation issue.</li><li>Local spikes → filter or matching-network resonance.</li></span></ul>
 </section>
+<section><h2>标准依据<span class="en"> / Standard basis</span></h2>
+<ul><span class="zh"><li>频谱平坦度定义于 802.11-2016 Clause 17.3.9.7（OFDM，Transmit spectral flatness）；VHT Clause 21.3.9.7（按 20/40/80/160 MHz 带宽分别给出分组窗）；HT 参照 Clause 20.3.9.4 对平坦度的要求。±16 子载波内 ≤ +1/−2 dB、边缘 ≤ +2/−4 dB 即 Clause 17 的分组窗。</li></span><span class="en"><li>Spectral flatness: 802.11-2016 Clause 17.3.9.7 (OFDM, Transmit spectral flatness); VHT Clause 21.3.9.7 (per-bandwidth grouping windows for 20/40/80/160 MHz); HT per Clause 20.3.9.4. The ±16-subcarrier center window ≤ +1/−2 dB and edge ≤ +2/−4 dB come from Clause 17's grouping.</li></span></ul>
+</section>
 </div>
+<p class="lede zh" style="font-size:.85rem">标准依据：IEEE Std 802.11-2016（合并了 OFDM/HT/VHT 各 PHY 的条款编号， Clause 17/20/21）；802.11-2016 已被 802.11-2020 取代，2020 又被 802.11-2024 取代，条款编号一致。法规项另见 FCC Part 15.247/15.407 与 ETSI EN 300 328/301 893。</p>
+<p class="lede en" style="font-size:.85rem">Standard basis: IEEE Std 802.11-2016 (consolidated clause numbering for the OFDM/HT/VHT PHYs, Clauses 17/20/21); 802.11-2016 was superseded by 802.11-2020, itself superseded by 802.11-2024, with identical clause numbering. Regulatory items: FCC Part 15.247/15.407 and ETSI EN 300 328/301 893.</p>
 <script>
 function setLang(l){document.body.dataset.lang=l;
 document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}

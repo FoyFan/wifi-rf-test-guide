@@ -28,7 +28,12 @@
 <section><h2>常见坑<span class="en"> / Pitfalls</span></h2>
 <ul><span class="zh"><li>用 CW 代替调制信号 → 结果完全错误。</li><li>RBW 设置不符标准 → 模板对比无意义。</li></span><span class="en"><li>Using CW instead of modulation invalidates the result.</li><li>Wrong RBW makes the mask comparison meaningless.</li></span></ul>
 </section>
+<section><h2>标准依据<span class="en"> / Standard basis</span></h2>
+<ul><span class="zh"><li>发射频谱模板定义于 802.11-2016：OFDM（11a/g）Clause 17.3.9.3（Transmit spectrum mask）；HT（11n）Clause 20.3.9.3；VHT（11ac）Clause 21.3.9.3。11ax（HE PHY）的模板由 Wi-Fi Alliance 认证测试计划与 802.11ax 修订版（合并进 802.11-2024 的 Clause 27）规定。</li><li>模板测量条件（RBW=100 kHz、RMS 检波、burst 触发）同样在上述条款中定义。</li></span><span class="en"><li>The TX spectrum mask is defined in 802.11-2016: OFDM (11a/g) Clause 17.3.9.3 (Transmit spectrum mask); HT (11n) Clause 20.3.9.3; VHT (11ac) Clause 21.3.9.3. For 11ax (HE PHY), the mask comes from the 802.11ax amendment (merged as Clause 27 in 802.11-2024) and the Wi-Fi Alliance test plans.</li><li>The measurement conditions (RBW=100 kHz, RMS detector, burst trigger) are defined in the same clauses.</li></span></ul>
+</section>
 </div>
+<p class="lede zh" style="font-size:.85rem">标准依据：IEEE Std 802.11-2016（合并了 OFDM/HT/VHT 各 PHY 的条款编号， Clause 17/20/21）；802.11-2016 已被 802.11-2020 取代，2020 又被 802.11-2024 取代，条款编号一致。法规项另见 FCC Part 15.247/15.407 与 ETSI EN 300 328/301 893。</p>
+<p class="lede en" style="font-size:.85rem">Standard basis: IEEE Std 802.11-2016 (consolidated clause numbering for the OFDM/HT/VHT PHYs, Clauses 17/20/21); 802.11-2016 was superseded by 802.11-2020, itself superseded by 802.11-2024, with identical clause numbering. Regulatory items: FCC Part 15.247/15.407 and ETSI EN 300 328/301 893.</p>
 <script>
 function setLang(l){document.body.dataset.lang=l;
 document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}

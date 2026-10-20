@@ -28,7 +28,12 @@
 <section><h2>超标处理<span class="en"> / If it fails</span></h2>
 <ul><span class="zh"><li>产线做 AFC（自动频率校准）写入校准数据后复测。</li><li>若 AFC 后仍超标，查晶振规格或晶体负载电容匹配。</li></span><span class="en"><li>Run AFC on the line, write calibration data, re-test.</li><li>If still failing, check the crystal spec and load-capacitor matching.</li></span></ul>
 </section>
+<section><h2>标准依据<span class="en"> / Standard basis</span></h2>
+<ul><span class="zh"><li>中心频率容限定义于 802.11-2016 Clause 17.3.9.4（OFDM，Center frequency tolerance ≤ ±20 ppm）；HT/VHT 沿用同一 ±20 ppm 要求（Clause 20.3.9.4 / 21.3.9.4）。11b（DSSS）Clause 16 允许 ±25 ppm。</li><li>±10 ppm 是产线内控经验值，不是标准要求。</li></span><span class="en"><li>Center frequency tolerance: 802.11-2016 Clause 17.3.9.4 (OFDM, ≤ ±20 ppm); HT/VHT keep the same ±20 ppm (Clause 20.3.9.4 / 21.3.9.4). 11b (DSSS) Clause 16 allows ±25 ppm.</li><li>±10 ppm is a production-line internal gate, not a standard requirement.</li></span></ul>
+</section>
 </div>
+<p class="lede zh" style="font-size:.85rem">标准依据：IEEE Std 802.11-2016（合并了 OFDM/HT/VHT 各 PHY 的条款编号， Clause 17/20/21）；802.11-2016 已被 802.11-2020 取代，2020 又被 802.11-2024 取代，条款编号一致。法规项另见 FCC Part 15.247/15.407 与 ETSI EN 300 328/301 893。</p>
+<p class="lede en" style="font-size:.85rem">Standard basis: IEEE Std 802.11-2016 (consolidated clause numbering for the OFDM/HT/VHT PHYs, Clauses 17/20/21); 802.11-2016 was superseded by 802.11-2020, itself superseded by 802.11-2024, with identical clause numbering. Regulatory items: FCC Part 15.247/15.407 and ETSI EN 300 328/301 893.</p>
 <script>
 function setLang(l){document.body.dataset.lang=l;
 document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}

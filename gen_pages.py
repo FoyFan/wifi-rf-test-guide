@@ -23,6 +23,8 @@ HEAD = """<!DOCTYPE html>
 """
 
 FOOT = """</div>
+<p class="lede zh" style="font-size:.85rem">标准依据：IEEE Std 802.11-2016（合并了 OFDM/HT/VHT 各 PHY 的条款编号， Clause 17/20/21）；802.11-2016 已被 802.11-2020 取代，2020 又被 802.11-2024 取代，条款编号一致。法规项另见 FCC Part 15.247/15.407 与 ETSI EN 300 328/301 893。</p>
+<p class="lede en" style="font-size:.85rem">Standard basis: IEEE Std 802.11-2016 (consolidated clause numbering for the OFDM/HT/VHT PHYs, Clauses 17/20/21); 802.11-2016 was superseded by 802.11-2020, itself superseded by 802.11-2024, with identical clause numbering. Regulatory items: FCC Part 15.247/15.407 and ETSI EN 300 328/301 893.</p>
 <script>
 function setLang(l){document.body.dataset.lang=l;
 document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}
@@ -42,6 +44,15 @@ def zh(s):
 
 def en(s):
     return f'<span class="en">{s}</span>'
+
+
+def std(s_zh, s_en):
+    """标准依据 / Standard basis block appended after 判定标准."""
+    return section("标准依据", "Standard basis",
+        "<ul>"
+        + zh(s_zh)
+        + en(s_en)
+        + "</ul>")
 
 
 PAGES = {}
@@ -95,6 +106,10 @@ PAGES["01-tx-power.html"] = {
             + en("<li>Skipping cable-loss calibration corrupts every number.</li>"
                  "<li>Peak vs average detector makes instruments disagree — follow the standard's configuration.</li>")
             + "</ul>"),
+        std("<li>发射功率本身在 802.11-2016 中无统一上限（17.3.9.1 仅规范发射功率的标注与控制），上限由各国法规定：美国 FCC Part 15.247（2.4G ≤ +30 dBm EIRP / 1W）、15.407（5G U-NII）；欧洲 ETSI EN 300 328 / EN 301 893（5G ≤ 23 dBm EIRP）；中国 SRRC。</li>"
+             "<li>信道间平坦度/功率控制精度参考 17.3.9.1（Transmit power）与 17.3.9.2 的要求。</li>",
+             "<li>802.11-2016 itself sets no unified TX-power ceiling (17.3.9.1 covers power annotation and control); limits come from national regulation: FCC Part 15.247 (2.4G ≤ +30 dBm EIRP / 1 W), 15.407 (5G U-NII); ETSI EN 300 328 / EN 301 893 (5G ≤ 23 dBm EIRP); China SRRC.</li>"
+             "<li>Inter-channel flatness / power-control accuracy per 17.3.9.1 (Transmit power) and 17.3.9.2.</li>"),
     ],
 }
 
@@ -140,6 +155,10 @@ PAGES["02-tx-spectrum-mask.html"] = {
             + en("<li>Using CW instead of modulation invalidates the result.</li>"
                  "<li>Wrong RBW makes the mask comparison meaningless.</li>")
             + "</ul>"),
+        std("<li>发射频谱模板定义于 802.11-2016：OFDM（11a/g）Clause 17.3.9.3（Transmit spectrum mask）；HT（11n）Clause 20.3.9.3；VHT（11ac）Clause 21.3.9.3。11ax（HE PHY）的模板由 Wi-Fi Alliance 认证测试计划与 802.11ax 修订版（合并进 802.11-2024 的 Clause 27）规定。</li>"
+             "<li>模板测量条件（RBW=100 kHz、RMS 检波、burst 触发）同样在上述条款中定义。</li>",
+             "<li>The TX spectrum mask is defined in 802.11-2016: OFDM (11a/g) Clause 17.3.9.3 (Transmit spectrum mask); HT (11n) Clause 20.3.9.3; VHT (11ac) Clause 21.3.9.3. For 11ax (HE PHY), the mask comes from the 802.11ax amendment (merged as Clause 27 in 802.11-2024) and the Wi-Fi Alliance test plans.</li>"
+             "<li>The measurement conditions (RBW=100 kHz, RMS detector, burst trigger) are defined in the same clauses.</li>"),
     ],
 }
 
@@ -175,7 +194,11 @@ PAGES["03-evm.html"] = {
             "<tr><td>16QAM</td><td>≤ −16 dB (16%)</td></tr>"
             "<tr><td>64QAM</td><td>≤ −25 dB (5.6%)</td></tr>"
             "<tr><td>256QAM</td><td>≤ −30 dB (3.2%)</td></tr>"
-            "<tr><td>1024QAM (11ax MCS10/11)</td><td>≤ −35 dB (1.8%)</td></tr></table>"),
+            "<tr><td>1024QAM (11ax MCS10/11)</td><td>≤ −35 dB (1.8%)</td></tr></table>"
+            + std("<li>EVM 限值定义于 802.11-2016：OFDM Clause 17.3.9.6（Transmit modulation accuracy）；HT Clause 20.3.9.5（按 MCS 规定相对星座误差误差比）；VHT Clause 21.3.9.2；11ax（HE）在 802.11-2024 Clause 27 及 WFA 测试计划中扩展到 1024QAM。表中数值即标准相对星座误差（RCE）限值，换算为 dB。</li>"
+                  "<li>注意标准按“每档调制”规定 EVM，测量条件（数据速率、包长、信道）在条款正文给出。</li>",
+                  "<li>EVM limits are defined in 802.11-2016: OFDM Clause 17.3.9.6 (Transmit modulation accuracy); HT Clause 20.3.9.5 (relative constellation error per MCS); VHT Clause 21.3.9.2; 11ax (HE) extends to 1024QAM in Clause 27 of 802.11-2024 and the WFA test plans. The table values are the standard's relative constellation error (RCE) limits converted to dB.</li>"
+                  "<li>The standard defines EVM per modulation class; measurement conditions (data rate, packet length, channel) are given in the clause text.</li>")),
         section("结果分析", "Analysis",
             "<ul>"
             + zh("<li>只有边缘子载波 EVM 差 → 频偏/相位噪声问题。</li>"
@@ -235,6 +258,10 @@ PAGES["04-freq-error.html"] = {
             + en("<li>Run AFC on the line, write calibration data, re-test.</li>"
                  "<li>If still failing, check the crystal spec and load-capacitor matching.</li>")
             + "</ul>"),
+        std("<li>中心频率容限定义于 802.11-2016 Clause 17.3.9.4（OFDM，Center frequency tolerance ≤ ±20 ppm）；HT/VHT 沿用同一 ±20 ppm 要求（Clause 20.3.9.4 / 21.3.9.4）。11b（DSSS）Clause 16 允许 ±25 ppm。</li>"
+             "<li>±10 ppm 是产线内控经验值，不是标准要求。</li>",
+             "<li>Center frequency tolerance: 802.11-2016 Clause 17.3.9.4 (OFDM, ≤ ±20 ppm); HT/VHT keep the same ±20 ppm (Clause 20.3.9.4 / 21.3.9.4). 11b (DSSS) Clause 16 allows ±25 ppm.</li>"
+             "<li>±10 ppm is a production-line internal gate, not a standard requirement.</li>"),
     ],
 }
 
@@ -274,6 +301,10 @@ PAGES["05-dc-leakage.html"] = {
             + en("<li>Excessive LO feed-through → hardware issue in the IQ modulator.</li>"
                  "<li>Poor DC-offset calibration → re-run the production DC calibration.</li>")
             + "</ul>"),
+        std("<li>中心频率泄漏（本振泄漏）要求位于 802.11-2016 Clause 17.3.9.5（OFDM，Transmit center frequency leakage）；HT/VHT 沿用同类要求（Clause 20.3.9.6 / 21.3.9.3 内对 spurious 与中心泄漏的规定）。标准规定泄漏功率须比总发射功率低 15 dB 以上。</li>"
+             "<li>该指标只适用于 OFDM 系列调制（11a/g/n/ac/ax），11b（DSSS）无此定义。</li>",
+             "<li>Center frequency leakage: 802.11-2016 Clause 17.3.9.5 (OFDM, Transmit center frequency leakage); HT/VHT keep the equivalent requirement (Clause 20.3.9.6 / 21.3.9.3 for spurious and center leakage). The standard requires the leakage power to be at least 15 dB below the total transmit power.</li>"
+             "<li>The spec applies only to the OFDM family (11a/g/n/ac/ax); 11b (DSSS) has no such definition.</li>"),
     ],
 }
 
@@ -317,6 +348,8 @@ PAGES["06-spectral-flatness.html"] = {
                  "<li>Mid-band dip → clock sync / channel-estimation issue.</li>"
                  "<li>Local spikes → filter or matching-network resonance.</li>")
             + "</ul>"),
+        std("<li>频谱平坦度定义于 802.11-2016 Clause 17.3.9.7（OFDM，Transmit spectral flatness）；VHT Clause 21.3.9.7（按 20/40/80/160 MHz 带宽分别给出分组窗）；HT 参照 Clause 20.3.9.4 对平坦度的要求。±16 子载波内 ≤ +1/−2 dB、边缘 ≤ +2/−4 dB 即 Clause 17 的分组窗。</li>",
+             "<li>Spectral flatness: 802.11-2016 Clause 17.3.9.7 (OFDM, Transmit spectral flatness); VHT Clause 21.3.9.7 (per-bandwidth grouping windows for 20/40/80/160 MHz); HT per Clause 20.3.9.4. The ±16-subcarrier center window ≤ +1/−2 dB and edge ≤ +2/−4 dB come from Clause 17's grouping.</li>"),
     ],
 }
 
@@ -360,6 +393,10 @@ PAGES["07-rx-sensitivity.html"] = {
             + en("<li>Measured sensitivity ≤ the standard limit (equal or better). E.g. 11n 20 MHz MCS0 limit −82 dBm; 11ac MCS9 80 MHz limit −72 dBm.</li>"
                  "<li>Sensitivity margin test: at limit + 3 dB, PER must still be ≤ 10%.</li>")
             + "</ul>"),
+        std("<li>接收机最小输入灵敏度（最小灵敏度）定义于 802.11-2016：OFDM Clause 17.3.10.2（Receiver minimum input sensitivity，含按调制/带宽的限值表）；HT Clause 20.3.10.2；VHT Clause 21.3.5（Receiver minimum input sensitivity，−82 dBm @ MCS0 20MHz 起表）。11ax 灵敏度由 802.11-2024 Clause 27 及 WFA RX 测试计划规定（含 MCS 与信道编码相关的 −82 dBm 基准表）。</li>"
+             "<li>测试条件：PER ≤ 10%、标准参考包（PSDU 4096 字节 OFDM / 1024 字节 DSSS）、1000 包，均在上述条款中定义。</li>",
+             "<li>RX minimum input sensitivity is defined in 802.11-2016: OFDM Clause 17.3.10.2 (Receiver minimum input sensitivity, with the limit table per modulation/bandwidth); HT Clause 20.3.10.2; VHT Clause 21.3.5 (limit table starting at −82 dBm @ MCS0 20 MHz). 11ax sensitivity comes from Clause 27 of 802.11-2024 and the WFA RX test plans.</li>"
+             "<li>Test conditions — PER ≤ 10%, the standard reference packet (PSDU 4096-byte OFDM / 1024-byte DSSS), 1000 packets — are defined in the same clauses.</li>"),
         section("常见坑", "Pitfalls",
             "<ul>"
             + zh("<li>屏蔽箱不干净、线缆屏蔽不良 → 环境信号污染结果，灵敏度虚差。测之前先测噪底。</li>"
@@ -404,6 +441,10 @@ PAGES["08-rx-max-input.html"] = {
             + zh("<li>接收机前端饱和/压缩 → 解调失败。改不了软件，通常是前端设计余量不足，需硬件评估。</li>")
             + en("<li>Front-end saturation/compression breaks demodulation. Not fixable in software — usually a front-end design margin issue needing hardware review.</li>")
             + "</ul>"),
+        std("<li>接收机最大输入电平定义于 802.11-2016 Clause 17.3.10.3（OFDM，Receiver maximum input level：在 −30 dBm 至 0 dBm 范围内 PER ≤ 10%）；HT Clause 20.3.10.3；VHT 沿用同类要求（Clause 21.3.6，Receiver maximum input level）。11ax 在 802.11-2024 Clause 27 中扩展。</li>"
+             "<li>标准要求接收机在 −30 dBm 到 0 dBm 全区间保持 PER ≤ 10%，上限通常为 0 dBm。</li>",
+             "<li>RX maximum input level: 802.11-2016 Clause 17.3.10.3 (OFDM, Receiver maximum input level: PER ≤ 10% from −30 dBm to 0 dBm); HT Clause 20.3.10.3; VHT keeps the equivalent requirement (Clause 21.3.6). 11ax extends it in Clause 27 of 802.11-2024.</li>"
+             "<li>The standard requires PER ≤ 10% across the whole −30 to 0 dBm range, with a ceiling of typically 0 dBm.</li>"),
     ],
 }
 

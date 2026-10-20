@@ -28,10 +28,15 @@
 <section><h2>判定标准<span class="en"> / Pass criteria</span></h2>
 <ul><span class="zh"><li>实测灵敏度 ≤ 标准限值（更好或相等）。例如：11n 20MHz MCS0 限值 −82 dBm；11ac MCS9 80MHz 限值 −72 dBm。</li><li>灵敏度裕量测试：在“限值 +3 dB”的电平下 PER 仍 ≤ 10%。</li></span><span class="en"><li>Measured sensitivity ≤ the standard limit (equal or better). E.g. 11n 20 MHz MCS0 limit −82 dBm; 11ac MCS9 80 MHz limit −72 dBm.</li><li>Sensitivity margin test: at limit + 3 dB, PER must still be ≤ 10%.</li></span></ul>
 </section>
+<section><h2>标准依据<span class="en"> / Standard basis</span></h2>
+<ul><span class="zh"><li>接收机最小输入灵敏度（最小灵敏度）定义于 802.11-2016：OFDM Clause 17.3.10.2（Receiver minimum input sensitivity，含按调制/带宽的限值表）；HT Clause 20.3.10.2；VHT Clause 21.3.5（Receiver minimum input sensitivity，−82 dBm @ MCS0 20MHz 起表）。11ax 灵敏度由 802.11-2024 Clause 27 及 WFA RX 测试计划规定（含 MCS 与信道编码相关的 −82 dBm 基准表）。</li><li>测试条件：PER ≤ 10%、标准参考包（PSDU 4096 字节 OFDM / 1024 字节 DSSS）、1000 包，均在上述条款中定义。</li></span><span class="en"><li>RX minimum input sensitivity is defined in 802.11-2016: OFDM Clause 17.3.10.2 (Receiver minimum input sensitivity, with the limit table per modulation/bandwidth); HT Clause 20.3.10.2; VHT Clause 21.3.5 (limit table starting at −82 dBm @ MCS0 20 MHz). 11ax sensitivity comes from Clause 27 of 802.11-2024 and the WFA RX test plans.</li><li>Test conditions — PER ≤ 10%, the standard reference packet (PSDU 4096-byte OFDM / 1024-byte DSSS), 1000 packets — are defined in the same clauses.</li></span></ul>
+</section>
 <section><h2>常见坑<span class="en"> / Pitfalls</span></h2>
 <ul><span class="zh"><li>屏蔽箱不干净、线缆屏蔽不良 → 环境信号污染结果，灵敏度虚差。测之前先测噪底。</li><li>DUT 没关省电/没锁速率 → PER 被重传和速率切换污染。</li></span><span class="en"><li>Leaky shield box or cables → ambient signals pollute the result; measure the noise floor first.</li><li>DUT not in fixed-rate / power-save disabled → PER polluted by retries and rate switching.</li></span></ul>
 </section>
 </div>
+<p class="lede zh" style="font-size:.85rem">标准依据：IEEE Std 802.11-2016（合并了 OFDM/HT/VHT 各 PHY 的条款编号， Clause 17/20/21）；802.11-2016 已被 802.11-2020 取代，2020 又被 802.11-2024 取代，条款编号一致。法规项另见 FCC Part 15.247/15.407 与 ETSI EN 300 328/301 893。</p>
+<p class="lede en" style="font-size:.85rem">Standard basis: IEEE Std 802.11-2016 (consolidated clause numbering for the OFDM/HT/VHT PHYs, Clauses 17/20/21); 802.11-2016 was superseded by 802.11-2020, itself superseded by 802.11-2024, with identical clause numbering. Regulatory items: FCC Part 15.247/15.407 and ETSI EN 300 328/301 893.</p>
 <script>
 function setLang(l){document.body.dataset.lang=l;
 document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}

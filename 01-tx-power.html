@@ -31,7 +31,12 @@
 <section><h2>常见坑<span class="en"> / Pitfalls</span></h2>
 <ul><span class="zh"><li>不校线损 → 功率虚高/虚低，全表失真。</li><li>频谱仪用峰值检波 vs 综合仪用平均检波，读数会打架——统一按标准配置。</li></span><span class="en"><li>Skipping cable-loss calibration corrupts every number.</li><li>Peak vs average detector makes instruments disagree — follow the standard's configuration.</li></span></ul>
 </section>
+<section><h2>标准依据<span class="en"> / Standard basis</span></h2>
+<ul><span class="zh"><li>发射功率本身在 802.11-2016 中无统一上限（17.3.9.1 仅规范发射功率的标注与控制），上限由各国法规定：美国 FCC Part 15.247（2.4G ≤ +30 dBm EIRP / 1W）、15.407（5G U-NII）；欧洲 ETSI EN 300 328 / EN 301 893（5G ≤ 23 dBm EIRP）；中国 SRRC。</li><li>信道间平坦度/功率控制精度参考 17.3.9.1（Transmit power）与 17.3.9.2 的要求。</li></span><span class="en"><li>802.11-2016 itself sets no unified TX-power ceiling (17.3.9.1 covers power annotation and control); limits come from national regulation: FCC Part 15.247 (2.4G ≤ +30 dBm EIRP / 1 W), 15.407 (5G U-NII); ETSI EN 300 328 / EN 301 893 (5G ≤ 23 dBm EIRP); China SRRC.</li><li>Inter-channel flatness / power-control accuracy per 17.3.9.1 (Transmit power) and 17.3.9.2.</li></span></ul>
+</section>
 </div>
+<p class="lede zh" style="font-size:.85rem">标准依据：IEEE Std 802.11-2016（合并了 OFDM/HT/VHT 各 PHY 的条款编号， Clause 17/20/21）；802.11-2016 已被 802.11-2020 取代，2020 又被 802.11-2024 取代，条款编号一致。法规项另见 FCC Part 15.247/15.407 与 ETSI EN 300 328/301 893。</p>
+<p class="lede en" style="font-size:.85rem">Standard basis: IEEE Std 802.11-2016 (consolidated clause numbering for the OFDM/HT/VHT PHYs, Clauses 17/20/21); 802.11-2016 was superseded by 802.11-2020, itself superseded by 802.11-2024, with identical clause numbering. Regulatory items: FCC Part 15.247/15.407 and ETSI EN 300 328/301 893.</p>
 <script>
 function setLang(l){document.body.dataset.lang=l;
 document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase().startsWith(l)));}

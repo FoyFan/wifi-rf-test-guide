@@ -34,4 +34,4 @@ python3 gen_pages.py
 
 Then commit the regenerated HTML.
 
-Limits shown follow IEEE 802.11 and typical product specs — always defer to the exact standard revision and your customer's spec sheet.
+Limits and clause numbers cited per test follow **IEEE Std 802.11-2016** (consolidated OFDM/HT/VHT numbering, Clauses 17/20/21 — TX §17.3.9.x, RX §17.3.10.x). 802.11-2016 was superseded by 802.11-2020, itself by 802.11-2024, with identical clause numbering. Regulatory limits: FCC Part 15.247/15.407 and ETSI EN 300 328/301 893 — always defer to your customer's spec sheet.
